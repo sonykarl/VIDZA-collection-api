@@ -14,21 +14,39 @@ public class Shoe {
     String description;
 
     @ManyToMany
-    List<Integer> sizes;
+    List<Integer> shoeSize;
 
-    public Shoe(String description, List<Integer> sizes, BigInteger price, String type, String brand, String picture) {
+    @ManyToMany
+    List<String> pictures;
+
+    @Column
+    BigInteger price;
+
+    @Column
+    String type;
+
+    @Column
+    String  brand;
+
+    @Column
+    String picture;
+
+    public Shoe(String description, List<Integer> shoeSize, List<String> pictures, BigInteger price, String type, String brand, String picture) {
         this.description = description;
-        this.sizes = sizes;
+        this.shoeSize = shoeSize;
+        this.pictures = pictures;
         this.price = price;
         this.type = type;
         this.brand = brand;
         this.picture = picture;
     }
 
+    public Shoe() {
+    }
+
     public BigInteger getId() {
         return id;
     }
-
 
     public String getDescription() {
         return description;
@@ -38,12 +56,20 @@ public class Shoe {
         this.description = description;
     }
 
-    public List<Integer> getSizes() {
-        return sizes;
+    public List<Integer> getShoeSize() {
+        return shoeSize;
     }
 
-    public void setSizes(List<Integer> sizes) {
-        this.sizes = sizes;
+    public void setShoeSize(List<Integer> shoeSize) {
+        this.shoeSize = shoeSize;
+    }
+
+    public List<String> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<String> pictures) {
+        this.pictures = pictures;
     }
 
     public BigInteger getPrice() {
@@ -77,16 +103,4 @@ public class Shoe {
     public void setPicture(String picture) {
         this.picture = picture;
     }
-
-    @Column
-    BigInteger price;
-
-    @Column
-    String type;
-
-    @Column
-    String  brand;
-
-    @Column
-    String picture;
 }

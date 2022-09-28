@@ -14,38 +14,43 @@ public class Shoe {
     String description;
 
     @ManyToMany
-    List<Integer> shoeSize;
+    @JoinColumn(name = "shoe_sizes")
+    List<ShoeSize> shoeSize;
 
-    @ManyToMany
-    List<String> pictures;
+    @OneToMany(mappedBy = "shoe")
+    List<ShoePictures> pictures;
 
     @Column
     BigInteger price;
 
-    @Column
-    String type;
+    @ManyToOne
+    @JoinColumn(name = "shoe_type")
+    ShoeType shoeType;
 
-    @Column
-    String  brand;
 
-    @Column
-    String picture;
-
-    public Shoe(String description, List<Integer> shoeSize, List<String> pictures, BigInteger price, String type, String brand, String picture) {
-        this.description = description;
-        this.shoeSize = shoeSize;
-        this.pictures = pictures;
-        this.price = price;
-        this.type = type;
-        this.brand = brand;
-        this.picture = picture;
-    }
+    @ManyToOne
+    @JoinColumn(name = "brand")
+    Brand  brand;
 
     public Shoe() {
     }
 
+    public Shoe(BigInteger id, String description, List<ShoeSize> shoeSize, List<ShoePictures> pictures, BigInteger price, ShoeType shoeType, Brand brand) {
+        this.id = id;
+        this.description = description;
+        this.shoeSize = shoeSize;
+        this.pictures = pictures;
+        this.price = price;
+        this.shoeType = shoeType;
+        this.brand = brand;
+    }
+
     public BigInteger getId() {
         return id;
+    }
+
+    public void setId(BigInteger id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -56,19 +61,19 @@ public class Shoe {
         this.description = description;
     }
 
-    public List<Integer> getShoeSize() {
+    public List<ShoeSize> getShoeSize() {
         return shoeSize;
     }
 
-    public void setShoeSize(List<Integer> shoeSize) {
+    public void setShoeSize(List<ShoeSize> shoeSize) {
         this.shoeSize = shoeSize;
     }
 
-    public List<String> getPictures() {
+    public List<ShoePictures> getPictures() {
         return pictures;
     }
 
-    public void setPictures(List<String> pictures) {
+    public void setPictures(List<ShoePictures> pictures) {
         this.pictures = pictures;
     }
 
@@ -80,27 +85,19 @@ public class Shoe {
         this.price = price;
     }
 
-    public String getType() {
-        return type;
+    public ShoeType getShoeType() {
+        return shoeType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setShoeType(ShoeType shoeType) {
+        this.shoeType = shoeType;
     }
 
-    public String getBrand() {
+    public Brand getBrand() {
         return brand;
     }
 
-    public void setBrand(String brand) {
+    public void setBrand(Brand brand) {
         this.brand = brand;
-    }
-
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
     }
 }

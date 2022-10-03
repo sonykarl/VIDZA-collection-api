@@ -77,11 +77,4 @@ public class ShoeType {
         this.age = age;
     }
 
-    public List<Shoe> getShoe() {
-        return shoe;
-    }
-
-    public void setShoe(List<Shoe> shoe) {
-        this.shoe = shoe;
-    }
 }

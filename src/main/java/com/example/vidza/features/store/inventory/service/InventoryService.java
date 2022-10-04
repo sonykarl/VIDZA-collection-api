@@ -1,5 +1,6 @@
 package com.example.vidza.features.store.inventory.service;
 
+import com.example.vidza.entities.Brand;
 import com.example.vidza.entities.Shoe;
 import com.example.vidza.features.store.inventory.dtos.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,12 +11,14 @@ public interface InventoryService {
      Shoe addShoeDetails(AddShoeDetailsDto addShoeDetailsDto);
      void addShoePhotos(MultipartFile[] shoePictures, MultipartFile coverPhoto, BigInteger shoeId);
 
-     void addShoeBrand(AddShoeBrandDto addShoeBrandDto);
+     BigInteger addShoeBrand(AddShoeBrandDto addShoeBrandDto);
 
      void addShoeBrandLogo(MultipartFile brandLogo, BigInteger brandId);
      void addShoeSize(AddShoeSizeDto addShoeSizeDto);
 
-     void addShoeType(AddShoeTypeDto addShoeTypeDto);
+     BigInteger addShoeType(AddShoeTypeDto addShoeTypeDto);
 
-     void AddShoeTypePicture(MultipartFile shoeTypePicture, BigInteger shoeTypeId);
+     void addShoeTypePicture(MultipartFile shoeTypePicture, BigInteger shoeTypeId);
+
+     BigInteger addShoeGender(AddShoeGenderDto addShoeGenderDto);
 }

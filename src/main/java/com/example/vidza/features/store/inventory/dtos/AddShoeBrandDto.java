@@ -3,6 +3,9 @@ package com.example.vidza.features.store.inventory.dtos;
 public class AddShoeBrandDto {
     public String brandName;
 
+    public AddShoeBrandDto() {
+    }
+
     public AddShoeBrandDto(String brandName) {
         this.brandName = brandName;
     }

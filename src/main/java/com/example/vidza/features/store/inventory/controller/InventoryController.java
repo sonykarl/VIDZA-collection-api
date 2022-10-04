@@ -1,9 +1,11 @@
 package com.example.vidza.features.store.inventory.controller;
 
 
+import com.example.vidza.entities.ShoeGender;
 import com.example.vidza.entities.ShoePictures;
 import com.example.vidza.features.store.inventory.dtos.AddShoeBrandDto;
 import com.example.vidza.features.store.inventory.dtos.AddShoeDetailsDto;
+import com.example.vidza.features.store.inventory.dtos.AddShoeGenderDto;
 import com.example.vidza.features.store.inventory.dtos.AddShoeTypeDto;
 import com.example.vidza.features.store.inventory.service.InventoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +37,10 @@ public class InventoryController {
     }
 
     @PostMapping("add-shoe-brand")
-    public void addShoeBrand(
+    public BigInteger addShoeBrand(
             @RequestBody AddShoeBrandDto addShoeBrandDto
             ){
-        inventoryService.addShoeBrand(addShoeBrandDto);
+        return inventoryService.addShoeBrand(addShoeBrandDto);
     }
 
     @PutMapping("add-shoe-brand-logo")
@@ -49,10 +51,10 @@ public class InventoryController {
         inventoryService.addShoeBrandLogo(brandLogo, brandId);
     }
     @PostMapping("add-shoe-type")
-    public void  addShoeType(
+    public BigInteger  addShoeType(
             @RequestBody AddShoeTypeDto addShoeTypeDto
             ){
-        inventoryService.addShoeType(addShoeTypeDto);
+        return inventoryService.addShoeType(addShoeTypeDto);
     }
 
     @PutMapping("add-shoe-type-pic")
@@ -60,6 +62,15 @@ public class InventoryController {
             @RequestParam ("shoeTypePic") MultipartFile shoeTypePic,
             @RequestParam ("shoeTypeId") BigInteger shoeTypeId
     ){
-        inventoryService.AddShoeTypePicture(shoeTypePic, shoeTypeId);
+        inventoryService.addShoeTypePicture(shoeTypePic, shoeTypeId);
+    }
+
+    @PutMapping("add-shoe-gender")
+    public void addShoeGender(
+            @RequestBody AddShoeGenderDto addShoeGenderDto
+            ){
+        inventoryService.addShoeGender(addShoeGenderDto);
     }
 }
+
+

@@ -2,10 +2,7 @@ package com.example.vidza.features.store.inventory.service;
 
 import com.example.vidza.entities.*;
 import com.example.vidza.features.store.inventory.dtos.*;
-import com.example.vidza.repositories.BrandRepository;
-import com.example.vidza.repositories.ShoeRepository;
-import com.example.vidza.repositories.ShoeSizeRepository;
-import com.example.vidza.repositories.ShoeTypeRepository;
+import com.example.vidza.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +23,8 @@ public class InventoryServiceImpl implements InventoryService{
     private ShoeTypeRepository shoeTypeRepository;
     @Autowired
     private ShoeSizeRepository shoeSizeRepository;
+    @Autowired
+    private ShoeGenderRepository shoeGenderRepository;
 
     @Override
     public Shoe addShoeDetails(AddShoeDetailsDto addShoeDetailsDto) {
@@ -70,10 +69,10 @@ public class InventoryServiceImpl implements InventoryService{
     }
 
     @Override
-    public void addShoeBrand(AddShoeBrandDto addShoeBrandDto) {
+    public BigInteger addShoeBrand(AddShoeBrandDto addShoeBrandDto) {
         Brand brand = new Brand();
         brand.setBrandName(addShoeBrandDto.brandName);
-        brandRepository.save(brand);
+        return brandRepository.save(brand).getId();
     }
 
     @Override
@@ -92,19 +91,27 @@ public class InventoryServiceImpl implements InventoryService{
     }
 
     @Override
-    public void addShoeType(AddShoeTypeDto addShoeTypeDto) {
+    public BigInteger addShoeType(AddShoeTypeDto addShoeTypeDto) {
+        ShoeGender shoeGender = shoeGenderRepository.findById(addShoeTypeDto.getShoeGender()).get();
         ShoeType shoeType = new ShoeType();
         shoeType.setShoeType(addShoeTypeDto.getShoeType());
-        shoeType.setShoeGender(addShoeTypeDto.getShoeGender());
+        shoeType.setShoeGender(shoeGender);
         shoeType.setAge(addShoeTypeDto.getAge());
-        shoeTypeRepository.save(shoeType);
+        return shoeTypeRepository.save(shoeType).getId();
     }
 
     @Override
-    public void AddShoeTypePicture(MultipartFile shoeTypePicture, BigInteger shoeTypeId) {
+    public void addShoeTypePicture(MultipartFile shoeTypePicture, BigInteger shoeTypeId) {
         ShoeType shoeType = shoeTypeRepository.findById(shoeTypeId).get();
         String picture = shoeTypePicture.getOriginalFilename();
         shoeType.setShoeTypePicture(picture);
         shoeTypeRepository.save(shoeType);
+    }
+
+    @Override
+    public BigInteger addShoeGender(AddShoeGenderDto addShoeGenderDto) {
+        ShoeGender shoeGender = new ShoeGender();
+        shoeGender.setGender(addShoeGenderDto.getGender());
+        return shoeGenderRepository.save(shoeGender).getId();
     }
 }

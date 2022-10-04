@@ -2,12 +2,17 @@ package com.example.vidza.features.store.inventory.dtos;
 
 import com.example.vidza.entities.ShoeGender;
 
+import java.math.BigInteger;
+
 public class AddShoeTypeDto {
     private String shoeType;
-    private ShoeGender shoeGender;
+    private BigInteger shoeGender;
     private Boolean age;
 
-    public AddShoeTypeDto(String shoeType, ShoeGender shoeGender, Boolean age) {
+    public AddShoeTypeDto() {
+    }
+
+    public AddShoeTypeDto(String shoeType, BigInteger shoeGender, Boolean age) {
         this.shoeType = shoeType;
         this.shoeGender = shoeGender;
         this.age = age;
@@ -21,11 +26,11 @@ public class AddShoeTypeDto {
         this.shoeType = shoeType;
     }
 
-    public ShoeGender getShoeGender() {
+    public BigInteger getShoeGender() {
         return shoeGender;
     }
 
-    public void setShoeGender(ShoeGender shoeGender) {
+    public void setShoeGender(BigInteger shoeGender) {
         this.shoeGender = shoeGender;
     }
 

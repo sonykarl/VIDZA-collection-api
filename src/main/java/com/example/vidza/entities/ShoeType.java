@@ -1,5 +1,7 @@
 package com.example.vidza.entities;
 
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.List;
@@ -14,6 +16,7 @@ public class ShoeType {
     String shoeType;
 
     @Column
+    @Nullable
     String shoeTypePicture;
 
     @OneToOne
@@ -28,13 +31,10 @@ public class ShoeType {
     public ShoeType() {
     }
 
-    public ShoeType(BigInteger id, String shoeType, String shoeTypePicture, ShoeGender shoeGender, Boolean age, List<Shoe> shoe) {
-        this.id = id;
+    public ShoeType(String shoeType, ShoeGender shoeGender, Boolean age) {
         this.shoeType = shoeType;
-        this.shoeTypePicture = shoeTypePicture;
         this.shoeGender = shoeGender;
         this.age = age;
-        this.shoe = shoe;
     }
 
     public BigInteger getId() {

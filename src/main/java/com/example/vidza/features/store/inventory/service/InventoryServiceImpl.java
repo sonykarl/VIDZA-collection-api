@@ -1,8 +1,7 @@
 package com.example.vidza.features.store.inventory.service;
 
 import com.example.vidza.entities.*;
-import com.example.vidza.features.store.inventory.dtos.AddShoeDetailsDto;
-import com.example.vidza.features.store.inventory.dtos.AddShoePhotosDto;
+import com.example.vidza.features.store.inventory.dtos.*;
 import com.example.vidza.repositories.BrandRepository;
 import com.example.vidza.repositories.ShoeRepository;
 import com.example.vidza.repositories.ShoeSizeRepository;
@@ -65,5 +64,44 @@ public class InventoryServiceImpl implements InventoryService{
             shoeRepository.save(shoe);
         }
 
+    }
+
+    @Override
+    public void addShoeBrand(AddShoeBrandDto addShoeBrandDto) {
+        Brand brand = new Brand();
+        brand.setBrandName(addShoeBrandDto.brandName);
+        brandRepository.save(brand);
+    }
+
+    @Override
+    public void addShoeBrandLogo(MultipartFile brandLogo, BigInteger brandId) {
+        Brand brand = brandRepository.findById(brandId).get();
+        String logo = brandLogo.getOriginalFilename();
+        brand.setBrandLogo(logo);
+        brandRepository.save(brand);
+    }
+
+    @Override
+    public void addShoeSize(AddShoeSizeDto addShoeSizeDto) {
+        ShoeSize shoeSize = new ShoeSize();
+        shoeSize.setShoeSize(addShoeSizeDto.getShoeSize());
+        shoeSizeRepository.save(shoeSize);
+    }
+
+    @Override
+    public void addShoeType(AddShoeTypeDto addShoeTypeDto) {
+        ShoeType shoeType = new ShoeType();
+        shoeType.setShoeType(addShoeTypeDto.getShoeType());
+        shoeType.setShoeGender(addShoeTypeDto.getShoeGender());
+        shoeType.setAge(addShoeTypeDto.getAge());
+        shoeTypeRepository.save(shoeType);
+    }
+
+    @Override
+    public void AddShoeTypePicture(MultipartFile shoeTypePicture, BigInteger shoeTypeId) {
+        ShoeType shoeType = shoeTypeRepository.findById(shoeTypeId).get();
+        String picture = shoeTypePicture.getOriginalFilename();
+        shoeType.setShoeTypePicture(picture);
+        shoeTypeRepository.save(shoeType);
     }
 }

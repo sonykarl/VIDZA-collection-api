@@ -1,0 +1,17 @@
+package com.example.vidza.features.store.inventory.dtos;
+
+public class AddShoeBrandDto {
+    public String brandName;
+
+    public AddShoeBrandDto(String brandName) {
+        this.brandName = brandName;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
+    }
+}

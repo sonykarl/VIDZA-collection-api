@@ -1,5 +1,7 @@
 package com.example.vidza.entities;
 
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.List;
@@ -14,6 +16,7 @@ public class Brand {
     String brandName;
 
     @Column
+    @Nullable
     String brandLogo;
 
     @OneToMany(mappedBy = "brand")
@@ -22,11 +25,8 @@ public class Brand {
     public Brand() {
     }
 
-    public Brand(BigInteger id, String brandName, String brandLogo, List<Shoe> shoe) {
-        this.id = id;
+    public Brand( String brandName) {
         this.brandName = brandName;
-        this.brandLogo = brandLogo;
-        this.shoe = shoe;
     }
 
     public BigInteger getId() {

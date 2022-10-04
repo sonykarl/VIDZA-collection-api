@@ -8,7 +8,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 public class AddShoeDetailsDto {
-    private List<ShoeSize> shoeSize;
+    private List<BigInteger> shoeSize;
     private BigInteger shoeType;
     private String description;
     private BigInteger brand;
@@ -17,7 +17,7 @@ public class AddShoeDetailsDto {
     public AddShoeDetailsDto() {
     }
 
-    public AddShoeDetailsDto(List<ShoeSize> shoeSize, BigInteger shoeType, String description, BigInteger brand, BigInteger price) {
+    public AddShoeDetailsDto(List<BigInteger> shoeSize, BigInteger shoeType, String description, BigInteger brand, BigInteger price) {
         this.shoeSize = shoeSize;
         this.shoeType = shoeType;
         this.description = description;
@@ -26,11 +26,11 @@ public class AddShoeDetailsDto {
     }
 
 
-    public List<ShoeSize> getShoeSize() {
+    public List<BigInteger> getShoeSize() {
         return shoeSize;
     }
 
-    public void setShoeSize(List<ShoeSize> shoeSize) {
+    public void setShoeSize(List<BigInteger> shoeSize) {
         this.shoeSize = shoeSize;
     }
 

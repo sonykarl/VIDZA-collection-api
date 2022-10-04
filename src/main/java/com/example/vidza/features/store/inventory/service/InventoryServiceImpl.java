@@ -1,13 +1,11 @@
 package com.example.vidza.features.store.inventory.service;
 
-import com.example.vidza.entities.Brand;
-import com.example.vidza.entities.Shoe;
-import com.example.vidza.entities.ShoePictures;
-import com.example.vidza.entities.ShoeType;
+import com.example.vidza.entities.*;
 import com.example.vidza.features.store.inventory.dtos.AddShoeDetailsDto;
 import com.example.vidza.features.store.inventory.dtos.AddShoePhotosDto;
 import com.example.vidza.repositories.BrandRepository;
 import com.example.vidza.repositories.ShoeRepository;
+import com.example.vidza.repositories.ShoeSizeRepository;
 import com.example.vidza.repositories.ShoeTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,14 +25,21 @@ public class InventoryServiceImpl implements InventoryService{
     private BrandRepository brandRepository;
     @Autowired
     private ShoeTypeRepository shoeTypeRepository;
+    @Autowired
+    private ShoeSizeRepository shoeSizeRepository;
 
     @Override
     public Shoe addShoeDetails(AddShoeDetailsDto addShoeDetailsDto) {
         Shoe shoe = new Shoe();
         Brand brand = brandRepository.findById(addShoeDetailsDto.getBrand()).get();
         ShoeType shoeType = shoeTypeRepository.findById(addShoeDetailsDto.getShoeType()).get();
+        List<ShoeSize> shoeSizes = new ArrayList<>();
 
-        shoe.setShoeSize(addShoeDetailsDto.getShoeSize());
+        for (BigInteger shoeSizeId: addShoeDetailsDto.getShoeSize()){
+            ShoeSize myShoeSize = shoeSizeRepository.findById(shoeSizeId).get();
+            shoeSizes.add(myShoeSize);
+        }
+        shoe.setShoeSize(shoeSizes);
         shoe.setShoeType(shoeType);
         shoe.setDescription(addShoeDetailsDto.getDescription());
         shoe.setPrice(addShoeDetailsDto.getPrice());

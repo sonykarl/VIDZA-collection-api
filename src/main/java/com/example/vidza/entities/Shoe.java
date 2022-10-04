@@ -1,5 +1,7 @@
 package com.example.vidza.entities;
 
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.List;
@@ -17,8 +19,9 @@ public class Shoe {
     @JoinColumn(name = "shoe_sizes")
     List<ShoeSize> shoeSize;
 
-    @OneToMany(mappedBy = "shoe")
-    List<ShoePictures> pictures;
+    @OneToOne
+    @Nullable
+    ShoePictures pictures;
 
     @Column
     BigInteger price;
@@ -35,8 +38,7 @@ public class Shoe {
     public Shoe() {
     }
 
-    public Shoe(BigInteger id, String description, List<ShoeSize> shoeSize, List<ShoePictures> pictures, BigInteger price, ShoeType shoeType, Brand brand) {
-        this.id = id;
+    public Shoe(String description, List<ShoeSize> shoeSize, @Nullable ShoePictures pictures, BigInteger price, ShoeType shoeType, Brand brand) {
         this.description = description;
         this.shoeSize = shoeSize;
         this.pictures = pictures;
@@ -69,11 +71,12 @@ public class Shoe {
         this.shoeSize = shoeSize;
     }
 
-    public List<ShoePictures> getPictures() {
+    @Nullable
+    public ShoePictures getPictures() {
         return pictures;
     }
 
-    public void setPictures(List<ShoePictures> pictures) {
+    public void setPictures(@Nullable ShoePictures pictures) {
         this.pictures = pictures;
     }
 

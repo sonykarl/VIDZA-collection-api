@@ -18,10 +18,8 @@ public class ShoeSize {
     public ShoeSize() {
     }
 
-    public ShoeSize(BigInteger id, Integer shoeSize, List<Shoe> shoes) {
-        this.id = id;
+    public ShoeSize(Integer shoeSize) {
         this.shoeSize = shoeSize;
-        this.shoes = shoes;
     }
 
     public BigInteger getId() {

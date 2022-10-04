@@ -2,16 +2,17 @@ package com.example.vidza.entities;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.List;
 
 @Entity
 public class ShoePictures {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     BigInteger id;
-    @Column
-    String shoePicture;
-    @ManyToOne
-    @JoinColumn(name = "shoe_pictures")
+
+    @OneToMany(mappedBy = "shoe_pics")
+    List<ShoePicture> shoePicture;
+    @OneToOne
     Shoe shoe;
 
     @Column
@@ -20,8 +21,7 @@ public class ShoePictures {
     public ShoePictures() {
     }
 
-    public ShoePictures(BigInteger id, String shoePicture, Shoe shoe, String coverPhoto) {
-        this.id = id;
+    public ShoePictures( List<ShoePicture> shoePicture, Shoe shoe, String coverPhoto){
         this.shoePicture = shoePicture;
         this.shoe = shoe;
         this.coverPhoto = coverPhoto;
@@ -35,11 +35,11 @@ public class ShoePictures {
         this.id = id;
     }
 
-    public String getShoePicture() {
+    public List<ShoePicture> getShoePicture() {
         return shoePicture;
     }
 
-    public void setShoePicture(String shoePicture) {
+    public void setShoePicture(List<ShoePicture> shoePicture) {
         this.shoePicture = shoePicture;
     }
 

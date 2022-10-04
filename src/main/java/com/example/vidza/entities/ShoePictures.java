@@ -10,7 +10,7 @@ public class ShoePictures {
     @GeneratedValue(strategy = GenerationType.AUTO)
     BigInteger id;
 
-    @OneToMany(mappedBy = "shoe_pictures")
+    @OneToMany(mappedBy = "shoe_pics")
     List<ShoePicture> shoePicture;
     @OneToOne
     Shoe shoe;
@@ -21,7 +21,7 @@ public class ShoePictures {
     public ShoePictures() {
     }
 
-    public ShoePictures( List<ShoePicture> shoePicture, Shoe shoe, String coverPhoto) {
+    public ShoePictures( List<ShoePicture> shoePicture, Shoe shoe, String coverPhoto){
         this.shoePicture = shoePicture;
         this.shoe = shoe;
         this.coverPhoto = coverPhoto;

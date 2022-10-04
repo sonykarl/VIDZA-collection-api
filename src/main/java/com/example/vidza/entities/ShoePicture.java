@@ -12,8 +12,8 @@ public class ShoePicture {
     private String picture;
 
     @ManyToOne
-    @JoinColumn(name = "shoe_pictures")
-    private ShoePictures shoePictures;
+    @JoinColumn(name = "shoe_pics")
+    private ShoePictures shoe_pics;
 
     public ShoePicture() {
     }

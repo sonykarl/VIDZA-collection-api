@@ -9,21 +9,22 @@ import java.util.List;
 
 public class AddShoeDetailsDto {
     private List<ShoeSize> shoeSize;
-    private ShoeType shoeType;
+    private BigInteger shoeType;
     private String description;
-    private Brand brand;
+    private BigInteger brand;
     private BigInteger price;
 
     public AddShoeDetailsDto() {
     }
 
-    public AddShoeDetailsDto(List<ShoeSize> shoeSize, ShoeType shoeType, String description, Brand brand, BigInteger price) {
+    public AddShoeDetailsDto(List<ShoeSize> shoeSize, BigInteger shoeType, String description, BigInteger brand, BigInteger price) {
         this.shoeSize = shoeSize;
         this.shoeType = shoeType;
         this.description = description;
         this.brand = brand;
         this.price = price;
     }
+
 
     public List<ShoeSize> getShoeSize() {
         return shoeSize;
@@ -33,11 +34,11 @@ public class AddShoeDetailsDto {
         this.shoeSize = shoeSize;
     }
 
-    public ShoeType getShoeType() {
+    public BigInteger getShoeType() {
         return shoeType;
     }
 
-    public void setShoeType(ShoeType shoeType) {
+    public void setShoeType(BigInteger shoeType) {
         this.shoeType = shoeType;
     }
 
@@ -49,11 +50,11 @@ public class AddShoeDetailsDto {
         this.description = description;
     }
 
-    public Brand getBrand() {
+    public BigInteger getBrand() {
         return brand;
     }
 
-    public void setBrand(Brand brand) {
+    public void setBrand(BigInteger brand) {
         this.brand = brand;
     }
 

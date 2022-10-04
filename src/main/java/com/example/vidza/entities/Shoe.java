@@ -1,5 +1,7 @@
 package com.example.vidza.entities;
 
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.List;
@@ -18,6 +20,7 @@ public class Shoe {
     List<ShoeSize> shoeSize;
 
     @OneToMany(mappedBy = "shoe")
+    @Nullable
     List<ShoePictures> pictures;
 
     @Column

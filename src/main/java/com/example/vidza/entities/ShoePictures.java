@@ -9,11 +9,10 @@ public class ShoePictures {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     BigInteger id;
-    @Column
-    @ManyToOne
-    @JoinColumn(name = "shoe_pictures")
-    List<String> shoePicture;
-    @ManyToOne
+
+    @OneToMany(mappedBy = "shoe_pictures")
+    List<ShoePicture> shoePicture;
+    @OneToOne
     Shoe shoe;
 
     @Column
@@ -22,7 +21,7 @@ public class ShoePictures {
     public ShoePictures() {
     }
 
-    public ShoePictures(List<String> shoePicture, Shoe shoe, String coverPhoto) {
+    public ShoePictures( List<ShoePicture> shoePicture, Shoe shoe, String coverPhoto) {
         this.shoePicture = shoePicture;
         this.shoe = shoe;
         this.coverPhoto = coverPhoto;
@@ -36,11 +35,11 @@ public class ShoePictures {
         this.id = id;
     }
 
-    public List<String> getShoePicture() {
+    public List<ShoePicture> getShoePicture() {
         return shoePicture;
     }
 
-    public void setShoePicture(List<String> shoePicture) {
+    public void setShoePicture(List<ShoePicture> shoePicture) {
         this.shoePicture = shoePicture;
     }
 

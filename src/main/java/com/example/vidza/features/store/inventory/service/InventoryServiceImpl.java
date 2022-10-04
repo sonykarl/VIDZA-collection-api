@@ -53,13 +53,16 @@ public class InventoryServiceImpl implements InventoryService{
         List<String> pictures = new ArrayList<>();
 
         if (shoe != null){
+
             ShoePictures shoePics = new ShoePictures();
+            List<ShoePicture> shoePic = new ArrayList<>();
+
             for (MultipartFile shoePicture:shoePictures) {
             pictures.add(shoePicture.getOriginalFilename());
             }
 
             shoePics.setCoverPhoto(coverPhoto.getOriginalFilename());
-            shoePics.setShoePicture(pictures);
+            shoePics.setShoePicture(shoePic);
             shoePics.setShoe(shoe);
             shoeRepository.save(shoe);
         }

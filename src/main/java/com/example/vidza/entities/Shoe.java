@@ -19,7 +19,7 @@ public class Shoe {
     @JoinColumn(name = "shoe_sizes")
     List<ShoeSize> shoeSize;
 
-    @OneToMany(mappedBy = "shoe")
+    @OneToOne
     @Nullable
     ShoePictures pictures;
 

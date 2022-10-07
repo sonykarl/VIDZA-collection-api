@@ -2,16 +2,19 @@ package com.example.vidza.features.store.inventory.service;
 
 import com.example.vidza.entities.*;
 import com.example.vidza.features.store.inventory.dtos.*;
+import com.example.vidza.features.utils.FilePaths;
 import com.example.vidza.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class InventoryServiceImpl implements InventoryService{
@@ -25,6 +28,8 @@ public class InventoryServiceImpl implements InventoryService{
     private ShoeSizeRepository shoeSizeRepository;
     @Autowired
     private ShoeGenderRepository shoeGenderRepository;
+
+
 
     @Override
     public Shoe addShoeDetails(AddShoeDetailsDto addShoeDetailsDto) {
@@ -47,23 +52,43 @@ public class InventoryServiceImpl implements InventoryService{
     }
 
     @Override
-    public void addShoePhotos(MultipartFile[] shoePictures, MultipartFile coverPhoto, BigInteger shoeId) {
-        Shoe shoe = shoeRepository.findById(shoeId).get();
-        List<String> pictures = new ArrayList<>();
+    public String addShoePhotos(MultipartFile[] shoePictures, MultipartFile coverPhoto, BigInteger shoeId) {
 
-        if (shoe != null){
+        String shoeResponse = new String();
 
-            ShoePictures shoePics = new ShoePictures();
-            List<ShoePicture> shoePic = new ArrayList<>();
+        try {
+            Shoe shoe = shoeRepository.findById(shoeId).get();
+            List<String> pictures = new ArrayList<>();
 
-            for (MultipartFile shoePicture:shoePictures) {
-            pictures.add(shoePicture.getOriginalFilename());
+            if (shoe != null){
+
+
+
+                ShoePictures shoePics = new ShoePictures();
+                List<ShoePicture> shoePic = new ArrayList<>();
+
+                for (MultipartFile shoePicture:shoePictures) {
+                    String shoePictureName  = shoePicture.getOriginalFilename();
+                    byte[] shoePictureByte = shoePicture.getBytes();
+                    pictures.add(shoePictureName);
+                }
+
+                shoePics.setCoverPhoto(coverPhoto.getOriginalFilename());
+                shoePics.setShoePicture(shoePic);
+                shoePics.setShoe(shoe);
+                Shoe updatedShoe = shoeRepository.save(shoe);
+
+                if (updatedShoe.getPictures() != null){
+                   shoeResponse =  "shoe pictures have been updated";
+                } else {
+                    shoeResponse = "shoe pictures have not been updated";
+                }
             }
 
-            shoePics.setCoverPhoto(coverPhoto.getOriginalFilename());
-            shoePics.setShoePicture(shoePic);
-            shoePics.setShoe(shoe);
-            shoeRepository.save(shoe);
+            return shoeResponse;
+
+        }catch (IOException e){
+            return e.getMessage();
         }
 
     }
@@ -76,11 +101,27 @@ public class InventoryServiceImpl implements InventoryService{
     }
 
     @Override
-    public void addShoeBrandLogo(MultipartFile brandLogo, BigInteger brandId) {
-        Brand brand = brandRepository.findById(brandId).get();
-        String logo = brandLogo.getOriginalFilename();
-        brand.setBrandLogo(logo);
-        brandRepository.save(brand);
+    public String addShoeBrandLogo(MultipartFile brandLogo, BigInteger brandId) {
+
+        try {
+            Brand brand = brandRepository.findById(brandId).get();
+            String logoName = brandLogo.getOriginalFilename();
+            byte[] logoBytes = brandLogo.getBytes();
+            Path path = Paths.get(FilePaths.F_ILE_PATHS.getfilePath() + logoName);
+            Files.write(path, logoBytes);
+            brand.setBrandLogo(logoName);
+            Brand updatedBrand = brandRepository.save(brand);
+
+            if (updatedBrand.getBrandLogo() != null) {
+                return "brandLogo updated successfully";
+            } else {
+                return "brandLogo not updated";
+            }
+
+        }catch (IOException e){
+            return e.getMessage();
+        }
+
     }
 
     @Override
@@ -101,11 +142,34 @@ public class InventoryServiceImpl implements InventoryService{
     }
 
     @Override
-    public void addShoeTypePicture(MultipartFile shoeTypePicture, BigInteger shoeTypeId) {
-        ShoeType shoeType = shoeTypeRepository.findById(shoeTypeId).get();
-        String picture = shoeTypePicture.getOriginalFilename();
-        shoeType.setShoeTypePicture(picture);
-        shoeTypeRepository.save(shoeType);
+    public String addShoeTypePicture(MultipartFile shoeTypePicture, BigInteger shoeTypeId) {
+
+
+
+        try {
+            ShoeType shoeType = shoeTypeRepository.findById(shoeTypeId).get();
+            /**
+             * Get the file and save it to the filepath
+             */
+            byte[] filebytes = shoeTypePicture.getBytes();
+            String picture = shoeTypePicture.getOriginalFilename();
+            Path path = Paths.get(FilePaths.F_ILE_PATHS.getfilePath() + picture);
+            Files.write(path,filebytes);
+            /**
+             * save shoe picture
+             */
+            shoeType.setShoeTypePicture(picture);
+            ShoeType shoetypeResponse = shoeTypeRepository.save(shoeType);
+
+            if (shoetypeResponse.getShoeTypePicture() != null){
+                return "shoe-type picture saved successfully";
+            } else {
+             return "shoe-type picture not saved try again";
+            }
+        }catch (IOException e){
+            return e.getMessage();
+        }
+
     }
 
     @Override

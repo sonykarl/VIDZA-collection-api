@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.math.BigInteger;
 
 @RestController
@@ -58,14 +59,14 @@ public class InventoryController {
     }
 
     @PutMapping("add-shoe-type-pic")
-    public void addShoeTypePicture(
+    public String addShoeTypePicture(
             @RequestParam ("shoeTypePic") MultipartFile shoeTypePic,
             @RequestParam ("shoeTypeId") BigInteger shoeTypeId
-    ){
-        inventoryService.addShoeTypePicture(shoeTypePic, shoeTypeId);
+    ) throws IOException {
+        return  inventoryService.addShoeTypePicture(shoeTypePic, shoeTypeId);
     }
 
-    @PutMapping("add-shoe-gender")
+    @PostMapping("add-shoe-gender")
     public void addShoeGender(
             @RequestBody AddShoeGenderDto addShoeGenderDto
             ){

@@ -9,11 +9,11 @@ import java.math.BigInteger;
 
 public interface InventoryService {
      Shoe addShoeDetails(AddShoeDetailsDto addShoeDetailsDto);
-     void addShoePhotos(MultipartFile[] shoePictures, MultipartFile coverPhoto, BigInteger shoeId);
+     String addShoePhotos(MultipartFile[] shoePictures, MultipartFile coverPhoto, BigInteger shoeId);
 
      BigInteger addShoeBrand(AddShoeBrandDto addShoeBrandDto);
 
-     void addShoeBrandLogo(MultipartFile brandLogo, BigInteger brandId);
+     String addShoeBrandLogo(MultipartFile brandLogo, BigInteger brandId);
      void addShoeSize(AddShoeSizeDto addShoeSizeDto);
 
      BigInteger addShoeType(AddShoeTypeDto addShoeTypeDto);

@@ -1,13 +1,11 @@
-package com.example.vidza.features.store.inventory.controller;
+package com.example.vidza.features.shopkeeper.inventory.controller;
 
 
-import com.example.vidza.entities.ShoeGender;
-import com.example.vidza.entities.ShoePictures;
-import com.example.vidza.features.store.inventory.dtos.AddShoeBrandDto;
-import com.example.vidza.features.store.inventory.dtos.AddShoeDetailsDto;
-import com.example.vidza.features.store.inventory.dtos.AddShoeGenderDto;
-import com.example.vidza.features.store.inventory.dtos.AddShoeTypeDto;
-import com.example.vidza.features.store.inventory.service.InventoryServiceImpl;
+import com.example.vidza.features.shopkeeper.inventory.dtos.AddShoeBrandDto;
+import com.example.vidza.features.shopkeeper.inventory.dtos.AddShoeDetailsDto;
+import com.example.vidza.features.shopkeeper.inventory.dtos.AddShoeGenderDto;
+import com.example.vidza.features.shopkeeper.inventory.dtos.AddShoeTypeDto;
+import com.example.vidza.features.shopkeeper.inventory.service.InventoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

@@ -1,8 +1,7 @@
-package com.example.vidza.features.store.inventory.service;
+package com.example.vidza.features.shopkeeper.inventory.service;
 
-import com.example.vidza.entities.Brand;
 import com.example.vidza.entities.Shoe;
-import com.example.vidza.features.store.inventory.dtos.*;
+import com.example.vidza.features.shopkeeper.inventory.dtos.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigInteger;

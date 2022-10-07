@@ -1,4 +1,4 @@
-package com.example.vidza.features.store.inventory.dtos;
+package com.example.vidza.features.shopkeeper.inventory.dtos;
 
 public class AddShoeSizeDto {
     int shoeSize;

@@ -1,4 +1,4 @@
-package com.example.vidza.features.store.inventory.dtos;
+package com.example.vidza.features.shopkeeper.inventory.dtos;
 
 public class AddShoeGenderDto {
     private String gender;

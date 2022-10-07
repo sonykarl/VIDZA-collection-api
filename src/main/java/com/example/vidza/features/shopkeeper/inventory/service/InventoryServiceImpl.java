@@ -1,18 +1,15 @@
-package com.example.vidza.features.store.inventory.service;
+package com.example.vidza.features.shopkeeper.inventory.service;
 
 import com.example.vidza.entities.*;
-import com.example.vidza.features.store.inventory.dtos.*;
+import com.example.vidza.features.shopkeeper.inventory.dtos.*;
 import com.example.vidza.features.utils.FilePaths;
+import com.example.vidza.features.utils.FileUploads;
 import com.example.vidza.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.math.BigInteger;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +25,9 @@ public class InventoryServiceImpl implements InventoryService{
     private ShoeSizeRepository shoeSizeRepository;
     @Autowired
     private ShoeGenderRepository shoeGenderRepository;
+
+    @Autowired
+    private FileUploads fileUploads;
 
 
 
@@ -54,6 +54,7 @@ public class InventoryServiceImpl implements InventoryService{
     @Override
     public String addShoePhotos(MultipartFile[] shoePictures, MultipartFile coverPhoto, BigInteger shoeId) {
 
+
         String shoeResponse = new String();
 
         try {
@@ -62,15 +63,12 @@ public class InventoryServiceImpl implements InventoryService{
 
             if (shoe != null){
 
-
-
                 ShoePictures shoePics = new ShoePictures();
                 List<ShoePicture> shoePic = new ArrayList<>();
 
                 for (MultipartFile shoePicture:shoePictures) {
-                    String shoePictureName  = shoePicture.getOriginalFilename();
-                    byte[] shoePictureByte = shoePicture.getBytes();
-                    pictures.add(shoePictureName);
+                    fileUploads.uploadFile(shoePicture, FilePaths.F_ILE_PATHS.getfilePath());
+                    pictures.add(shoePicture.getOriginalFilename());
                 }
 
                 shoePics.setCoverPhoto(coverPhoto.getOriginalFilename());
@@ -87,7 +85,7 @@ public class InventoryServiceImpl implements InventoryService{
 
             return shoeResponse;
 
-        }catch (IOException e){
+        }catch (Exception e){
             return e.getMessage();
         }
 
@@ -106,9 +104,7 @@ public class InventoryServiceImpl implements InventoryService{
         try {
             Brand brand = brandRepository.findById(brandId).get();
             String logoName = brandLogo.getOriginalFilename();
-            byte[] logoBytes = brandLogo.getBytes();
-            Path path = Paths.get(FilePaths.F_ILE_PATHS.getfilePath() + logoName);
-            Files.write(path, logoBytes);
+            fileUploads.uploadFile(brandLogo,FilePaths.F_ILE_PATHS.getfilePath());
             brand.setBrandLogo(logoName);
             Brand updatedBrand = brandRepository.save(brand);
 
@@ -118,7 +114,7 @@ public class InventoryServiceImpl implements InventoryService{
                 return "brandLogo not updated";
             }
 
-        }catch (IOException e){
+        }catch (Exception e){
             return e.getMessage();
         }
 
@@ -148,17 +144,8 @@ public class InventoryServiceImpl implements InventoryService{
 
         try {
             ShoeType shoeType = shoeTypeRepository.findById(shoeTypeId).get();
-            /**
-             * Get the file and save it to the filepath
-             */
-            byte[] filebytes = shoeTypePicture.getBytes();
-            String picture = shoeTypePicture.getOriginalFilename();
-            Path path = Paths.get(FilePaths.F_ILE_PATHS.getfilePath() + picture);
-            Files.write(path,filebytes);
-            /**
-             * save shoe picture
-             */
-            shoeType.setShoeTypePicture(picture);
+            fileUploads.uploadFile(shoeTypePicture,FilePaths.F_ILE_PATHS.getfilePath());
+            shoeType.setShoeTypePicture(shoeTypePicture.getOriginalFilename());
             ShoeType shoetypeResponse = shoeTypeRepository.save(shoeType);
 
             if (shoetypeResponse.getShoeTypePicture() != null){
@@ -166,7 +153,7 @@ public class InventoryServiceImpl implements InventoryService{
             } else {
              return "shoe-type picture not saved try again";
             }
-        }catch (IOException e){
+        }catch (Exception e){
             return e.getMessage();
         }
 

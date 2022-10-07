@@ -1,6 +1,6 @@
 package com.example.vidza.features.utils;
 
-public enum FIlePaths {
+public enum FilePaths {
     F_ILE_PATHS;
 
     public String getfilePath(){

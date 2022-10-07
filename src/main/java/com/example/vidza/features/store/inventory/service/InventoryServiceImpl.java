@@ -2,22 +2,19 @@ package com.example.vidza.features.store.inventory.service;
 
 import com.example.vidza.entities.*;
 import com.example.vidza.features.store.inventory.dtos.*;
-import com.example.vidza.features.utils.FIlePaths;
+import com.example.vidza.features.utils.FilePaths;
 import com.example.vidza.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class InventoryServiceImpl implements InventoryService{
@@ -85,10 +82,20 @@ public class InventoryServiceImpl implements InventoryService{
 
     @Override
     public void addShoeBrandLogo(MultipartFile brandLogo, BigInteger brandId) {
-        Brand brand = brandRepository.findById(brandId).get();
-        String logo = brandLogo.getOriginalFilename();
-        brand.setBrandLogo(logo);
-        brandRepository.save(brand);
+
+        try {
+            Brand brand = brandRepository.findById(brandId).get();
+            String logoName = brandLogo.getOriginalFilename();
+            byte[] logoBytes = brandLogo.getBytes();
+            Path path = Paths.get(FilePaths.F_ILE_PATHS.getfilePath() + logoName);
+            Files.write(path, logoBytes);
+            brand.setBrandLogo(logoName);
+            brandRepository.save(brand);
+
+        }catch (IOException e){
+
+        }
+
     }
 
     @Override
@@ -120,7 +127,7 @@ public class InventoryServiceImpl implements InventoryService{
              */
             byte[] filebytes = shoeTypePicture.getBytes();
             String picture = shoeTypePicture.getOriginalFilename();
-            Path path = Paths.get("src/main/resources/static/uploads/" + picture);
+            Path path = Paths.get(FilePaths.F_ILE_PATHS.getfilePath() + picture);
             Files.write(path,filebytes);
             /**
              * save shoe picture

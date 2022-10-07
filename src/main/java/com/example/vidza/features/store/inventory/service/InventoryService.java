@@ -18,7 +18,7 @@ public interface InventoryService {
 
      BigInteger addShoeType(AddShoeTypeDto addShoeTypeDto);
 
-     void addShoeTypePicture(MultipartFile shoeTypePicture, BigInteger shoeTypeId);
+     String addShoeTypePicture(MultipartFile shoeTypePicture, BigInteger shoeTypeId);
 
      BigInteger addShoeGender(AddShoeGenderDto addShoeGenderDto);
 }

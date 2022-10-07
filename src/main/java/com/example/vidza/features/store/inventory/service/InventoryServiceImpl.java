@@ -2,12 +2,18 @@ package com.example.vidza.features.store.inventory.service;
 
 import com.example.vidza.entities.*;
 import com.example.vidza.features.store.inventory.dtos.*;
+import com.example.vidza.features.utils.FIlePaths;
 import com.example.vidza.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +31,8 @@ public class InventoryServiceImpl implements InventoryService{
     private ShoeSizeRepository shoeSizeRepository;
     @Autowired
     private ShoeGenderRepository shoeGenderRepository;
+
+    private String UPLOADED_FOLDER = "";
 
     @Override
     public Shoe addShoeDetails(AddShoeDetailsDto addShoeDetailsDto) {
@@ -101,11 +109,34 @@ public class InventoryServiceImpl implements InventoryService{
     }
 
     @Override
-    public void addShoeTypePicture(MultipartFile shoeTypePicture, BigInteger shoeTypeId) {
-        ShoeType shoeType = shoeTypeRepository.findById(shoeTypeId).get();
-        String picture = shoeTypePicture.getOriginalFilename();
-        shoeType.setShoeTypePicture(picture);
-        shoeTypeRepository.save(shoeType);
+    public String addShoeTypePicture(MultipartFile shoeTypePicture, BigInteger shoeTypeId) {
+
+
+
+        try {
+            ShoeType shoeType = shoeTypeRepository.findById(shoeTypeId).get();
+            /**
+             * Get the file and save it to the filepath
+             */
+            byte[] filebytes = shoeTypePicture.getBytes();
+            String picture = shoeTypePicture.getOriginalFilename();
+            Path path = Paths.get("src/main/resources/static/uploads/" + picture);
+            Files.write(path,filebytes);
+            /**
+             * save shoe picture
+             */
+            shoeType.setShoeTypePicture(picture);
+            ShoeType shoetypeResponse = shoeTypeRepository.save(shoeType);
+
+            if (shoetypeResponse.getShoeTypePicture() != null){
+                return "shoe-type picture saved successfully";
+            } else {
+             return "shoe-type picture not saved try again";
+            }
+        }catch (IOException e){
+            return e.getMessage();
+        }
+
     }
 
     @Override

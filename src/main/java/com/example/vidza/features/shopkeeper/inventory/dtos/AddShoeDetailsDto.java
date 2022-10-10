@@ -1,8 +1,4 @@
-package com.example.vidza.features.store.inventory.dtos;
-
-import com.example.vidza.entities.Brand;
-import com.example.vidza.entities.ShoeSize;
-import com.example.vidza.entities.ShoeType;
+package com.example.vidza.features.shopkeeper.inventory.dtos;
 
 import java.math.BigInteger;
 import java.util.List;

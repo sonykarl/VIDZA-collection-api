@@ -1,4 +1,4 @@
-package com.example.vidza.features.store.orders;
+package com.example.vidza.features.shopkeeper.orders;
 
 
 import org.springframework.web.bind.annotation.RestController;

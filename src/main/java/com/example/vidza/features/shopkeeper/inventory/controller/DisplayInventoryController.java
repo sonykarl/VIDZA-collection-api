@@ -1,13 +1,17 @@
 package com.example.vidza.features.shopkeeper.inventory.controller;
 
 
+import com.example.vidza.features.shopkeeper.inventory.dtos.GetShoeTypePic;
 import com.example.vidza.features.shopkeeper.inventory.service.InventoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.math.BigInteger;
 
 @RestController
 @RequestMapping("api/v1/inventory/display")
@@ -16,14 +20,11 @@ public class DisplayInventoryController {
     @Autowired
     private InventoryServiceImpl inventoryService;
 
-    @GetMapping("get-shoe-type-pic")
-    public byte[] getShoeTypePic(){
-        try {
-            return inventoryService.getshoeTypePicture();
-        }catch (Exception e){
-            System.out.println(e);
-        }
-
-        return null;
+    @GetMapping("get-shoe-pic/{id}")
+    private ResponseEntity<byte[]> getShoePic(
+            @PathVariable("id") BigInteger id
+            ) throws IOException {
+      byte[] image = inventoryService.getshoeTypePicture(id);
+      return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
 }

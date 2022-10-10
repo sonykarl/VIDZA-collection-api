@@ -2,8 +2,10 @@ package com.example.vidza.features.shopkeeper.inventory.service;
 
 import com.example.vidza.entities.Shoe;
 import com.example.vidza.features.shopkeeper.inventory.dtos.*;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.math.BigInteger;
 
 public interface InventoryService {
@@ -20,4 +22,6 @@ public interface InventoryService {
      String addShoeTypePicture(MultipartFile shoeTypePicture, BigInteger shoeTypeId);
 
      BigInteger addShoeGender(AddShoeGenderDto addShoeGenderDto);
+
+     byte[] getshoeTypePicture() throws IOException;
 }

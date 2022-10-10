@@ -5,10 +5,15 @@ import com.example.vidza.features.shopkeeper.inventory.dtos.*;
 import com.example.vidza.features.utils.FilePaths;
 import com.example.vidza.features.utils.FileUploads;
 import com.example.vidza.repositories.*;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -164,5 +169,14 @@ public class InventoryServiceImpl implements InventoryService{
         ShoeGender shoeGender = new ShoeGender();
         shoeGender.setGender(addShoeGenderDto.getGender());
         return shoeGenderRepository.save(shoeGender).getId();
+    }
+
+    @Override
+    public byte[] getshoeTypePicture() throws IOException {
+        ShoeType shoeType = shoeTypeRepository.findById(BigInteger.valueOf(4)).get();
+        String pic = shoeType.getShoeTypePicture();
+
+        InputStream in = getClass().getResourceAsStream(FilePaths.F_ILE_PATHS.getfilePath() + pic);
+        return IOUtils.toByteArray(in);
     }
 }

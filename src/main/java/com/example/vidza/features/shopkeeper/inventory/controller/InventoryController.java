@@ -1,6 +1,7 @@
 package com.example.vidza.features.shopkeeper.inventory.controller;
 
 
+import com.example.vidza.entities.Shoe;
 import com.example.vidza.features.shopkeeper.inventory.dtos.AddShoeBrandDto;
 import com.example.vidza.features.shopkeeper.inventory.dtos.AddShoeDetailsDto;
 import com.example.vidza.features.shopkeeper.inventory.dtos.AddShoeGenderDto;
@@ -21,10 +22,11 @@ public class InventoryController {
     private InventoryServiceImpl inventoryService;
 
     @PostMapping("add-shoe-details")
-    public void addShoeDetails(
+    public BigInteger addShoeDetails(
             @RequestBody AddShoeDetailsDto addShoeDto
     ){
-        inventoryService.addShoeDetails(addShoeDto);
+        Shoe shoe = inventoryService.addShoeDetails(addShoeDto);
+        return shoe.getId();
     }
     @PutMapping("add-shoe-photos")
     public void addShoePhotos(
